@@ -17,13 +17,21 @@
 #### 2. **Configurar Repositório**
 - **Repository URL:** `https://github.com/seu-usuario/seu-repositorio.git`
 - **Reference:** `main` (ou sua branch principal)
-- **Compose path:** `docker-compose.portainer.yml`
+- **Compose path:** Escolha uma das opções:
+  - `docker-compose.portainer.yml` ✅ **Recomendado** (portas 3001, 8091)
+  - `docker-compose.flexible.yml` (portas configuráveis via env)
+  - `docker-compose.prod.yml` (produção completa)
 
 #### 3. **Variáveis de Ambiente (Opcional)**
+
+**Para docker-compose.portainer.yml:** Não precisa de variáveis
+
+**Para docker-compose.flexible.yml:** Configure as portas
 ```env
-FRONTEND_PORT=3000
-BACKEND_PORT=8090
+FRONTEND_PORT=3002
+BACKEND_PORT=8092
 JAVA_OPTS=-Xmx1g -Xms512m
+COMPOSE_PROJECT_NAME=aprovados
 ```
 
 #### 4. **Deploy**
@@ -33,10 +41,44 @@ JAVA_OPTS=-Xmx1g -Xms512m
 ### 🌐 Acessar a Aplicação
 
 Após o deploy bem-sucedido:
-- **Frontend:** `http://seu-servidor:3000`
-- **Backend API:** `http://seu-servidor:8090`
+
+**Com docker-compose.portainer.yml:**
+- **Frontend:** `http://seu-servidor:3001`
+- **Backend API:** `http://seu-servidor:8091`
+
+**Com docker-compose.flexible.yml:**
+- **Frontend:** `http://seu-servidor:[FRONTEND_PORT]`
+- **Backend API:** `http://seu-servidor:[BACKEND_PORT]`
 
 ### 🔧 Troubleshooting
+
+#### ❌ Erro: "port is already allocated"
+**Causa:** A porta já está sendo usada por outro serviço
+
+**Soluções:**
+
+1. **Usar portas alternativas (Recomendado):**
+   ```yaml
+   # No Portainer, use docker-compose.portainer.yml
+   # Portas: Frontend 3001, Backend 8091
+   ```
+
+2. **Configurar portas customizadas:**
+   ```env
+   # Adicione estas variáveis no Portainer:
+   FRONTEND_PORT=3002
+   BACKEND_PORT=8092
+   ```
+
+3. **Verificar portas disponíveis:**
+   ```bash
+   # Se tiver acesso SSH ao servidor:
+   ./check-ports.sh
+   ```
+
+4. **Usar docker-compose.flexible.yml:**
+   - Permite configurar portas via variáveis
+   - Mais flexível para diferentes ambientes
 
 #### Erro: "openjdk:17-jdk-slim: not found"
 ✅ **Solucionado!** Agora usamos `eclipse-temurin:17-jdk-alpine`
@@ -73,10 +115,24 @@ Para atualizar a aplicação:
 
 ### 📝 Arquivos Importantes
 
-- `docker-compose.portainer.yml` - Configuração simplificada para Portainer
+#### Docker Compose Files:
+- `docker-compose.portainer.yml` ✅ **Recomendado para Portainer**
+  - Portas fixas: Frontend 3001, Backend 8091
+  - Configuração simples, sem variáveis
+  
+- `docker-compose.flexible.yml` 🔧 **Para portas customizadas**
+  - Portas configuráveis via variáveis de ambiente
+  - Ideal quando há conflitos de porta
+  
+- `docker-compose.prod.yml` 🚀 **Produção completa**
+  - Health checks, logs rotativos
+  - Configurações avançadas
+
+#### Outros arquivos:
 - `back/Dockerfile` - Build do backend Java
 - `front/Dockerfile` - Build do frontend React
 - `front/nginx.conf` - Configuração do Nginx
+- `check-ports.sh` - Script para verificar portas disponíveis
 
 ### 🎯 Dicas de Produção
 
