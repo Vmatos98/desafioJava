@@ -39,11 +39,22 @@ docker-compose up --build
 
 # Produção
 docker-compose -f docker-compose.prod.yml up --build -d
+
+# Portainer (recomendado para servidores)
+docker-compose -f docker-compose.portainer.yml up --build -d
 ```
 
+#### 🚀 **Deploy com Portainer:**
+1. Acesse seu Portainer
+2. Crie uma nova Stack
+3. Use o repositório Git com `docker-compose.portainer.yml`
+4. Deploy! 
+
+📖 **Guia completo:** [DEPLOY-PORTAINER.md](DEPLOY-PORTAINER.md)
+
 #### Acessar:
-- **Frontend:** http://localhost (porta 80)
-- **Backend:** http://localhost:8080
+- **Frontend:** http://localhost:3000
+- **Backend:** http://localhost:8090
 
 ### 💻 **Opção 2: Desenvolvimento Local**
 

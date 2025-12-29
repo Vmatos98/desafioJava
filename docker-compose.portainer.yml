@@ -8,22 +8,16 @@ services:
       dockerfile: Dockerfile
     container_name: aprovados-backend
     ports:
-      - "8080:8080"
+      - "8090:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-      - JAVA_OPTS=-Xmx512m -Xms256m
+      - JAVA_OPTS=-Xmx1g -Xms512m
     volumes:
       - backend_data:/app/data
       - backend_uploads:/app/uploads
     networks:
       - aprovados-network
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/api/aprovados"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
 
   # Frontend - React + Nginx
   frontend:
@@ -38,11 +32,6 @@ services:
     networks:
       - aprovados-network
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
 
 volumes:
   backend_data:

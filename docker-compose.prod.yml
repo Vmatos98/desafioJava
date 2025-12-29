@@ -20,7 +20,7 @@ services:
       - aprovados-network-prod
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/api/aprovados"]
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/aprovados"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -38,7 +38,7 @@ services:
       dockerfile: Dockerfile
     container_name: aprovados-frontend-prod
     ports:
-      - "${FRONTEND_PORT:-90}:80"
+      - "${FRONTEND_PORT:-3000}:8080"
     depends_on:
       backend:
         condition: service_healthy
@@ -46,7 +46,7 @@ services:
       - aprovados-network-prod
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost"]
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
       interval: 30s
       timeout: 10s
       retries: 3
