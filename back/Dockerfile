@@ -1,5 +1,5 @@
 # Dockerfile para Backend Java Spring Boot
-FROM openjdk:17-jdk-slim as build
+FROM eclipse-temurin:17-jdk-alpine as build
 
 # Instalar Maven
 RUN apt-get update && apt-get install -y maven
