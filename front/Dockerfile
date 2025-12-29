@@ -36,8 +36,8 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/build /usr/share/nginx/html
 
 # Criar usuário não-root
-RUN addgroup -g 1001 -S nginx && \
-    adduser -u 1001 -S nginx -G nginx
+# RUN addgroup -g 1001 -S nginx && \
+#     adduser -u 1001 -S nginx -G nginx
 
 # Ajustar permissões
 RUN chown -R nginx:nginx /var/cache/nginx && \
