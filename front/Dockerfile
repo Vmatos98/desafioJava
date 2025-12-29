@@ -1,49 +1,30 @@
 # Dockerfile para Frontend React + TypeScript
 
-# Estágio de build
+# Build stage
 FROM node:18-alpine as build
 
-# Definir diretório de trabalho
 WORKDIR /app
 
-# Copiar arquivos de configuração
 COPY package*.json ./
 COPY tsconfig.json ./
 
-# Instalar dependências
 RUN npm ci --silent
 
-# Copiar código fonte
 COPY public ./public
 COPY src ./src
 
-# Build da aplicação
 RUN npm run build
 
-# Estágio de produção com Nginx
+# Production stage
 FROM nginx:1.25-alpine
 
-# Instalar curl para health checks
 RUN apk add --no-cache curl
 
-# Remover configuração padrão do Nginx
-RUN rm /etc/nginx/conf.d/default.conf
-
-# Copiar configuração customizada do Nginx
+# Use configuração mínima do Nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copiar arquivos buildados para o diretório correto
 COPY --from=build /app/build /usr/share/nginx/html
 
-# Verificar se os arquivos foram copiados corretamente
-RUN ls -la /usr/share/nginx/html/
-
-# Expor porta
 EXPOSE 8080
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
-    CMD curl -f http://localhost:8080 || exit 1
-
-# Comando para executar
 CMD ["nginx", "-g", "daemon off;"]

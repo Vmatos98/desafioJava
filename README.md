@@ -50,11 +50,7 @@ docker-compose -f docker-compose.portainer.yml up --build -d
 3. Use o repositório Git com `docker-compose.portainer.yml`
 4. Deploy! 
 
-**💡 Conflito de portas?** Use `docker-compose.flexible.yml` com variáveis de ambiente
-
-**🔧 Problemas de API?** Veja o [Guia de Troubleshooting](TROUBLESHOOTING-FRONTEND.md)
-
-📖 **Guia completo:** [DEPLOY-PORTAINER.md](DEPLOY-PORTAINER.md)
+**💡 Conflito de portas?** Use `docker-compose.prod.yml` com variáveis de ambiente
 
 #### Acessar:
 - **Frontend:** http://localhost:3001 (ou sua porta configurada)

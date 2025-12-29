@@ -23,10 +23,10 @@ services:
   frontend:
     build:
       context: ./front
-      dockerfile: Dockerfile.debug
+      dockerfile: Dockerfile
     container_name: aprovados-frontend
     ports:
-      - "3001:80"
+      - "3001:8080"
     depends_on:
       - backend
     networks:
