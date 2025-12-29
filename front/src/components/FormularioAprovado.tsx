@@ -2,6 +2,7 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import InputMask from 'react-input-mask';
 import axios from 'axios';
 import { AprovadoFormData, FormErrors, Message, ApiResponse } from '../types/aprovado.types';
+import { API_ENDPOINTS } from '../config/api';
 import './FormularioAprovado.css';
 
 const FormularioAprovado: React.FC = () => {
@@ -119,7 +120,7 @@ const FormularioAprovado: React.FC = () => {
         formDataToSend.append('imagem', imagem);
       }
       
-      const response = await axios.post<ApiResponse>('/api/aprovados', formDataToSend, {
+      const response = await axios.post<ApiResponse>(API_ENDPOINTS.APROVADOS, formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

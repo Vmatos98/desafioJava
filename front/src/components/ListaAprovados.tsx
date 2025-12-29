@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Aprovado, Message } from '../types/aprovado.types';
+import { API_ENDPOINTS } from '../config/api';
 import './ListaAprovados.css';
 
 const ListaAprovados: React.FC = () => {
@@ -16,7 +17,7 @@ const ListaAprovados: React.FC = () => {
   const carregarAprovados = async () => {
     try {
       setLoading(true);
-      const response = await axios.get<Aprovado[]>('/api/aprovados');
+      const response = await axios.get<Aprovado[]>(API_ENDPOINTS.APROVADOS);
       setAprovados(response.data);
       
       if (response.data.length === 0) {

@@ -52,6 +52,8 @@ docker-compose -f docker-compose.portainer.yml up --build -d
 
 **💡 Conflito de portas?** Use `docker-compose.flexible.yml` com variáveis de ambiente
 
+**🔧 Problemas de API?** Veja o [Guia de Troubleshooting](TROUBLESHOOTING-API.md)
+
 📖 **Guia completo:** [DEPLOY-PORTAINER.md](DEPLOY-PORTAINER.md)
 
 #### Acessar:
