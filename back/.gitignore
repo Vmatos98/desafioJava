@@ -1,0 +1,89 @@
+# ===================================
+# BACKEND - JAVA SPRING BOOT
+# ===================================
+
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.properties
+
+# Gradle (caso mude para Gradle)
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# JAR files
+*.jar
+*.war
+*.nar
+*.ear
+
+# Spring Boot
+spring-boot-*.log
+application.pid
+*.pid
+
+# H2 Database
+*.db
+*.trace.db
+*.lock.db
+data/
+testdb.*
+
+# Uploads
+uploads/
+files/
+temp/
+
+# Logs
+logs/
+*.log
+*.log.*
+
+# IDE - IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# IDE - Eclipse
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+
+# IDE - NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# VS Code
+.vscode/
+
+# Configurações locais
+application-local.properties
+application-dev.properties
+config/local/
+
+# Testes
+test-results/
+coverage/
+*.lcov
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.bak
+*.backup

@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  # Backend - Spring Boot
+  backend:
+    build:
+      context: ./back
+      dockerfile: Dockerfile
+    container_name: aprovados-backend-prod
+    ports:
+      - "${BACKEND_PORT:-8080}:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - JAVA_OPTS=-Xmx1g -Xms512m
+      - SERVER_PORT=8080
+    volumes:
+      - backend_data_prod:/app/data
+      - backend_uploads_prod:/app/uploads
+    networks:
+      - aprovados-network-prod
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/api/aprovados"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Frontend - React + Nginx
+  frontend:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    container_name: aprovados-frontend-prod
+    ports:
+      - "${FRONTEND_PORT:-80}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - aprovados-network-prod
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  backend_data_prod:
+    driver: local
+  backend_uploads_prod:
+    driver: local
+
+networks:
+  aprovados-network-prod:
+    driver: bridge
